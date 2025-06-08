@@ -1,0 +1,8 @@
+{
+    "module_name": "Unicode Macro Map",
+    "maintainer": "Stephen Ostermiller",
+    "license": "GPL-2.0-or-later",
+    "features":{
+        "unicodemap":true
+    }
+}
