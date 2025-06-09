@@ -1,4 +1,4 @@
-# Process Any Key → QMK Module
+# Process Any Key — QMK Module
 
 This module adds a method that can be called from your `keymap.c` that will process any possible keycode. For example:
 
@@ -51,4 +51,4 @@ The QMK developers do **not** provide a similar method in QMK core because of th
 
 ## License
 
- GNU General Public License Version 2. See the [LICENSE file](../LICENSE.txt) for details.
+ GNU General Public License Version 2. See the [LICENSE file](../LICENSE) for details.

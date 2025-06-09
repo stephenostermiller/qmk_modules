@@ -52,4 +52,4 @@ Remove the modules from `keymap.json` and delete the `modules/stephen_ostermille
 
 ## License
 
- GNU General Public License Version 2. See the [LICENSE file](LICENSE.txt) for details.
+ GNU General Public License Version 2. See the [LICENSE file](LICENSE) for details.
