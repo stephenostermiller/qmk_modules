@@ -1,8 +1,8 @@
 {
-    "module_name": "Auto Unicode Mode OS Detection",
+    "module_name": "Easy Override",
     "maintainer": "Stephen Ostermiller",
     "license": "GPL-2.0-or-later",
     "features":{
-        "os_detection":true
+        "key_override":true
     }
 }

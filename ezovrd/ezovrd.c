@@ -14,5 +14,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
-#include "unicode_macro_map.h"
+#include QMK_KEYBOARD_H
+#include "process_keycode_any.h"
+
+bool ezovrd_key_event(bool pressed, void *context) {
+    return process_keycode_any((uint16_t)context, pressed);
+}

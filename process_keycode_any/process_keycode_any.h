@@ -15,4 +15,7 @@
  */
 
 #pragma once
-#include "unicode_macro_map.h"
+
+#include <stdbool.h>
+
+bool process_keycode_any(uint16_t keycode, const bool pressed);

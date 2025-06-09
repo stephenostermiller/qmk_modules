@@ -1,8 +1,8 @@
 {
-    "module_name": "Auto Unicode Mode OS Detection",
+    "module_name": "Easy Tap Dance",
     "maintainer": "Stephen Ostermiller",
     "license": "GPL-2.0-or-later",
     "features":{
-        "os_detection":true
+        "tap_dance":true
     }
 }

@@ -15,26 +15,34 @@
  */
 
 #include "quantum.h"
+#include "send_string.h"
+#include "unicode.h"
+#include "utf8.h"
+#include "send_mixed_string.h"
 
 ASSERT_COMMUNITY_MODULES_MIN_API_VERSION(1,1,0);
 
-// Use the callback for OS detection to set the unicode mode
-bool process_detected_host_os_auto_unicode_os(os_variant_t detected_os) {
-
-    switch (detected_os) {
-        case OS_MACOS:
-        case OS_IOS:
-            set_unicode_input_mode(UNICODE_MODE_MACOS);
-            break;
-        case OS_WINDOWS:
-            set_unicode_input_mode(UNICODE_MODE_WINCOMPOSE);
-            break;
-        case OS_LINUX:
-            set_unicode_input_mode(UNICODE_MODE_LINUX);
-            break;
-        default:
-            break;
+ void send_mixed_string(const char *str) {
+    if (!str) {
+        return;
     }
 
-    return true;
+    // While the string has contents
+    while (*str) {
+        // pick one unicode char off the front
+        // and shorten the string to start after that char
+        int32_t unicodeChar = 0;
+        str = decode_utf8(str, &unicodeChar);
+
+        if (unicodeChar >= 0) {
+            switch(unicodeChar){
+                case '\r': case '\n': case '\t': case ' ' ... '~':
+                    // Printable ASCII
+                    send_char((char)unicodeChar);
+                    break;
+                default:
+                    register_unicode(unicodeChar);
+            }
+        }
+    }
 }

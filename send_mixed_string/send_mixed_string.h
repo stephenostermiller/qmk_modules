@@ -14,5 +14,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
-#include "unicode_macro_map.h"
+ #pragma once
+
+ void send_mixed_string(const char *str);
