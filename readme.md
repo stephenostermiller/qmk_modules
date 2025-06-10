@@ -5,16 +5,17 @@ Here are community modules for the [Quantum Mechanical Keyboard
 These modules were developed for use in [Stephen's QMK
 keymap](https://github.com/stephenostermiller/qmk_userspace/tree/main/keyboards/ergodox_ez/base/keymaps/dvorak_qwerty).
 
-| Module                                        | Description                                              |
-|-----------------------------------------------|----------------------------------------------------------|
-| [Auto Unicode OS](./auto_unicode_os/)         | Uses operating system detection to set the unicode mode. |
-| [Easy Override](./ezovrd/)                    | Key overrides that supports every keycode.               |
-| [Easy Tap Dance](./eztd/)                     | Tap dancing without writing handler methods.             |
-| [Process Any Keycode](./process_keycode_any/) | A single method that handles every keycode.              |
-| [Send Mixed String](./send_mixed_string/)     | Sends strings containing unicode and ASCII efficiently.  |
-| [Unicode Macro Map](./unicode_macro_map/)     | Emoji and macro unicode keycodes,                        |
+| Module                                          | Description                                              |
+|-------------------------------------------------|----------------------------------------------------------|
+| [Auto Shift Overrides](./auto_shift_overrides/) | Makes key overrides compatible with auto shift.          |
+| [Auto Unicode OS](./auto_unicode_os/)           | Uses operating system detection to set the unicode mode. |
+| [Easy Override](./ezovrd/)                      | Key overrides that supports every keycode.               |
+| [Easy Tap Dance](./eztd/)                       | Tap dancing without writing handler methods.             |
+| [Process Any Keycode](./process_keycode_any/)   | A single method that handles every keycode.              |
+| [Send Mixed String](./send_mixed_string/)       | Sends strings containing unicode and ASCII efficiently.  |
+| [Unicode Macro Map](./unicode_macro_map/)       | Emoji and macro unicode keycodes,                        |
 
-## How to install
+## Installation
 
 **Step 1. Download modules.** Run these shell commands substituting in your qmk directory.
 
@@ -31,6 +32,7 @@ file `keymap.json` in your keymap folder with a list of the modules you want to 
 ```json
 {
     "modules": [
+        "stephen_ostermiller/auto_shift_overrides",
         "stephen_ostermiller/auto_unicode_os",
         "stephen_ostermiller/ezovrd",
         "stephen_ostermiller/eztd",

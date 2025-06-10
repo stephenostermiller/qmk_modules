@@ -1,0 +1,8 @@
+{
+    "module_name": "Auto Shift Override Compatibility",
+    "maintainer": "Stephen Ostermiller",
+    "license": "GPL-2.0-or-later",
+    "features":{
+        "auto_shift":true
+    }
+}
