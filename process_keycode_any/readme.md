@@ -44,7 +44,7 @@ The QMK developers do **not** provide a similar method in QMK core because of th
 ```json
 {
     "modules": [
-        "stephen_ostermiller/process_keycode_any",
+        "stephen_ostermiller/process_keycode_any"
     ]
 }
 ```
