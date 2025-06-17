@@ -22,13 +22,13 @@
 
 ASSERT_COMMUNITY_MODULES_MIN_API_VERSION(1,1,0);
 
+// This is built on top of unicode map which requires
+// this array to be defined. Declare it here, but
+// it will never be used.
 const uint32_t PROGMEM unicode_map[] = {};
 
 void unicode_macro_map_send_string(uint8_t index) {
-    clear_mods();
-    clear_weak_mods();
-    send_keyboard_report();
-    send_mixed_string(unicode_macro_map[index]);
+    send_mixed_string_P((const char*)pgm_read_word(&unicode_macro_map[index]));
 }
 
 bool process_record_unicode_macro_map(uint16_t keycode, keyrecord_t *record) {

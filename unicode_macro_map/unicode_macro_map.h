@@ -19,7 +19,7 @@
 #include <stdint.h>
 #include "progmem.h"
 
-extern const char* unicode_macro_map[];
+extern const char* const unicode_macro_map[] PROGMEM;
 
 /**
  * \brief Send the unicode string for the given index in the `unicode_macro_map` array.

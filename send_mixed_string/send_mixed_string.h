@@ -16,4 +16,14 @@
 
  #pragma once
 
- void send_mixed_string(const char *str);
+/**
+ * Send keystrokes, possibly unicode strokes,
+ * for a UTF-8 string.
+ */
+void send_mixed_string(const char *str);
+
+/**
+ * Send keystrokes, possibly unicode strokes,
+ * for a UTF-8 string stored in PROGMEM (flash memory).
+ */
+void send_mixed_string_P(const char *flashStr);

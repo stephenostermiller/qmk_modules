@@ -7,18 +7,27 @@ This module takes over the unicode keycode space just like the unicode map funct
 - Each unicode keycode can be a string of many characters, ie. a macro.
 
 ```c
+
+const char u_em_dash[] PROGMEM  = "—";
+const char u_heart[] PROGMEM  = "❤️";
+const char u_tblflp[] PROGMEM = "(╯°□°）╯︵ ┻━┻";
+const char u_low_ae[] PROGMEM = "æ";
+const char u_upp_ae[] PROGMEM = "Æ";
+const char u_to[] PROGMEM = "To Whom It May Concern:";
+const char u_sig[] PROGMEM = "Sincerely,\nA Concerned Citizen";
+
 enum unicode_names {
     U_EM_DASH, U_HEART, U_TBLFLP, U_LOW_AE, U_UPP_AE, U_TO, U_SIG
 };
 
-const char* unicode_macro_map[] = {
-    [U_EM_DASH] = "—",
-    [U_HEART] = "❤️",
-    [U_TBLFLP]= "(╯°□°）╯︵ ┻━┻",
-    [U_LOW_AE]= "æ",
-    [U_UPP_AE]= "Æ",
-    [U_TO]= "To Whom It May Concern:",
-    [U_SIG]= "Sincerely,\nA Concerned Citizen",
+const char* const unicode_macro_map[] PROGMEM = {
+    [U_EM_DASH] = u_em_dash,
+    [U_HEART] = u_heart,
+    [U_TBLFLP]= u_tblflp,
+    [U_LOW_AE]= u_low_ae,
+    [U_UPP_AE]= u_upp_ae,
+    [U_TO]= u_to,
+    [U_SIG]= u_sig,
 };
 ```
 
