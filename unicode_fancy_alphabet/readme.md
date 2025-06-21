@@ -11,7 +11,7 @@ This module defines a keycode that enables fancy alphabet mode: `UFA_CYC`. Assig
 - Pressing the escape key while fancy alphabet mode is on turns off the mode.
 - Pressing `UFA_CYC` after fancy alphabet mode has been turned off turns it back on using the same alphabet used last time it was on.
 
-Alternately you can programmatically turn the mode on and set which alphabet you want to use. See the functions available in [unicode_fancy_alphabet.h](unicode_fancy_alphabet.h]).
+Alternately you can programmatically turn the mode on and set which alphabet you want to use. See the functions available in [unicode_fancy_alphabet.h](unicode_fancy_alphabet.h).
 
 
 ## Supported alphabets
