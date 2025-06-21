@@ -80,7 +80,7 @@ void send_mixed_string_P(const char *flashStr) {
 
     // While the string has contents
     while (pgm_read_byte(flashStr)) {
-        
+
         // Copy five bytes from the string
         // to the buffer. This may copy from beyond
         // the end of the flash string and that is OK.
