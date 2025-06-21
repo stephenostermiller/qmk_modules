@@ -1,0 +1,11 @@
+{
+    "module_name": "Unicode Fancy Alphabet",
+    "maintainer": "Stephen Ostermiller",
+    "license": "GPL-2.0-or-later",
+    "keycodes": [
+        {
+            "key": "UNICODE_FANCY_ALPHABET_CYCLE",
+            "aliases": ["UFA_CYC"]
+        }
+    ]
+}
