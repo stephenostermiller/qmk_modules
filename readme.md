@@ -11,9 +11,10 @@ keymap](https://github.com/stephenostermiller/qmk_userspace/tree/main/keyboards/
 | [Auto Unicode OS](./auto_unicode_os/)           | Uses operating system detection to set the unicode mode. |
 | [Easy Override](./ezovrd/)                      | Key overrides that support every keycode.                |
 | [Easy Tap Dance](./eztd/)                       | Tap dancing without writing handler methods.             |
+| [Fancy Alphabet](./unicode_fancy_alphabet/)     | Type unicode characters similar to letters and numbers.  |
 | [Process Any Keycode](./process_keycode_any/)   | A single method that handles every keycode.              |
 | [Send Mixed String](./send_mixed_string/)       | Sends strings containing unicode and ASCII efficiently.  |
-| [Unicode Macro Map](./unicode_macro_map/)       | Emoji and macro unicode keycodes,                        |
+| [Unicode Macro Map](./unicode_macro_map/)       | Emoji and macro unicode keycodes.                        |
 
 ## Installation
 
@@ -38,6 +39,7 @@ file `keymap.json` in your keymap folder with a list of the modules you want to 
         "stephen_ostermiller/eztd",
         "stephen_ostermiller/process_keycode_any",
         "stephen_ostermiller/send_mixed_string",
+        "stephen_ostermiller/unicode_fancy_alphabet",
         "stephen_ostermiller/unicode_macro_map"
     ]
 }
