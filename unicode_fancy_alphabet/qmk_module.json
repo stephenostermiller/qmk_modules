@@ -6,6 +6,10 @@
         {
             "key": "UNICODE_FANCY_ALPHABET_CYCLE",
             "aliases": ["UFA_CYC"]
+        },
+        {
+            "key": "UNICODE_FANCY_ALPHABET_MOMENTARY",
+            "aliases": ["UFA_MO"]
         }
     ]
 }

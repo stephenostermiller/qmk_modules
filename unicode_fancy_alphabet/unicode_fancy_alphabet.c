@@ -143,6 +143,7 @@ void unicode_fancy_alphabet_set(uint8_t alphabet) {
         unicode_fancy_alphabet_last = unicode_fancy_alphabet_current;
     }
     unicode_fancy_alphabet_current = alphabet;
+    layer_state_set_user(layer_state);
 }
 
 uint8_t unicode_fancy_alphabet_get(void) {
@@ -240,6 +241,7 @@ bool process_record_unicode_fancy_alphabet(uint16_t keycode, keyrecord_t *record
     if (record->event.pressed) {
         switch (keycode) {
             case UNICODE_FANCY_ALPHABET_CYCLE:
+            case UNICODE_FANCY_ALPHABET_MOMENTARY:
                 unicode_fancy_alphabet_cycle();
                 return false;
             case KC_ESC:
@@ -251,6 +253,9 @@ bool process_record_unicode_fancy_alphabet(uint16_t keycode, keyrecord_t *record
             case KC_A ... KC_0:
                 return _process_record_unicode_fancy_alphabet(keycode, record);
         }
+    } else if (keycode == UNICODE_FANCY_ALPHABET_MOMENTARY){
+        unicode_fancy_alphabet_set(UNICODE_FANCY_ALPHABET_NONE);
+        return false;
     }
 
     return true;
