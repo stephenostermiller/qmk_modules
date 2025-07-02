@@ -4,5 +4,11 @@
     "license": "GPL-2.0-or-later",
     "features":{
         "tap_dance":true
-    }
+    },
+    "keycodes": [
+        {
+            "key": "EZTD_MULTI_SINGLE",
+            "aliases": ["EZTD_M1"]
+        }
+    ]
 }

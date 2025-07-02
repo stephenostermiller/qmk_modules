@@ -17,7 +17,8 @@
 #include "eztd.h"
 #include "process_keycode_any.h"
 
-void eztd_key_event(uint16_t keycode, const bool pressed) {
+void eztd_key_event(uint16_t keycode, uint16_t single_tap, uint8_t single_count, bool pressed) {
+    uint8_t i;
     switch(keycode) {
         case KC_TRANSPARENT:
         case QK_MOD_TAP ... QK_MOD_TAP_MAX:
@@ -27,17 +28,38 @@ void eztd_key_event(uint16_t keycode, const bool pressed) {
             return;
     }
 
+    if (keycode == EZTD_MULTI_SINGLE) {
+        if (pressed) {
+            for (i=0; i<single_count-1; i++) {
+                eztd_key_event(single_tap, XXXXXXX , 1, true);
+#               if TAP_CODE_DELAY > 0
+                    wait_ms(TAP_CODE_DELAY);
+#               endif
+                eztd_key_event(single_tap, XXXXXXX , 1, false);
+#               if TAP_CODE_DELAY > 0
+                    wait_ms(TAP_CODE_DELAY);
+#               endif
+            }
+            eztd_key_event(single_tap, XXXXXXX , 1, true);
+        } else {
+            eztd_key_event(single_tap, XXXXXXX , 1, false);
+        }
+        return;
+    }
+
     process_keycode_any(keycode, pressed);
 }
 
-uint8_t eztd_step(tap_dance_state_t *state, eztd_data *data) {
+static eztd_state_t eztd_states[TAP_DANCE_MAX_SIMULTANEOUS];
+
+uint8_t eztd_step(tap_dance_state_t *state, eztd_data_t *data) {
     if (data->interrupted_is_tap && state->interrupted) {
         // When interrupted and configured for flow
         // treat all taps as over taps. This causes
         // them te be handled in eztd_each, sooner
         // than the end of the dance. They will
         // then send only the single tap keycode
-        switch(data->step){
+        switch(eztd_states[state->state_idx].step){
             case EZTD_FIRST_OVERTAP:
             case EZTD_NTH_OVERTAP:
                 // Another tap after over tap
@@ -104,13 +126,14 @@ uint8_t eztd_step(tap_dance_state_t *state, eztd_data *data) {
 
 
 void eztd_each(tap_dance_state_t *state, void *user_data) {
-    eztd_data* data = (eztd_data*)user_data;
-    data->step = eztd_step(state, data);
+    eztd_data_t data;
+    memcpy_P(&data, user_data, sizeof(eztd_data_t));
+    eztd_states[state->state_idx].step = eztd_step(state, &data);
     // Send over taps as they happen rather than waiting
     // for the end of the dance.
     int taps=0;
     // First count the over taps
-    switch(data->step){
+    switch(eztd_states[state->state_idx].step){
         case EZTD_FIRST_OVERTAP:
             taps=state->count;
             break;
@@ -122,43 +145,45 @@ void eztd_each(tap_dance_state_t *state, void *user_data) {
     }
     // Send all the over taps
     for (int i=0; i<taps; i++) {
-        eztd_key_event(data->tap, true);
+        eztd_key_event(data.tap, XXXXXXX, 1, true);
 #       if TAP_CODE_DELAY > 0
             wait_ms(TAP_CODE_DELAY);
 #       endif
-        eztd_key_event(data->tap, false);
+        eztd_key_event(data.tap, XXXXXXX, 1, false);
     }
 }
 
 void eztd_finished(tap_dance_state_t *state, void *user_data) {
-    eztd_data* data = (eztd_data*)user_data;
-    data->step = eztd_step(state, data);
+    eztd_data_t data;
+    memcpy_P(&data, user_data, sizeof(eztd_data_t));
+    eztd_states[state->state_idx].step = eztd_step(state, &data);
     // send key down event when tap dance is finished.
-    switch (data->step) {
-        case EZTD_SINGLE_TAP: eztd_key_event(data->tap, true); break;
-        case EZTD_SINGLE_HOLD: eztd_key_event(data->hold, true); break;
-        case EZTD_DOUBLE_TAP: eztd_key_event(data->double_tap, true); break;
-        case EZTD_DOUBLE_HOLD: eztd_key_event(data->double_hold, true); break;
-        case EZTD_TRIPLE_TAP: eztd_key_event(data->triple_tap, true); break;
-        case EZTD_TRIPLE_HOLD: eztd_key_event(data->triple_hold, true); break;
+    switch (eztd_states[state->state_idx].step) {
+        case EZTD_SINGLE_TAP: eztd_key_event(data.tap, XXXXXXX, 1, true); break;
+        case EZTD_SINGLE_HOLD: eztd_key_event(data.hold, data.tap, 1, true); break;
+        case EZTD_DOUBLE_TAP: eztd_key_event(data.double_tap, data.tap, 2, true); break;
+        case EZTD_DOUBLE_HOLD: eztd_key_event(data.double_hold, data.tap, 2, true); break;
+        case EZTD_TRIPLE_TAP: eztd_key_event(data.triple_tap, data.tap, 3, true); break;
+        case EZTD_TRIPLE_HOLD: eztd_key_event(data.triple_hold, data.tap, 3, true); break;
         // no default case: cases for over taps handled in eztd_each()
     }
 }
 
 void eztd_reset(tap_dance_state_t *state, void *user_data) {
-    eztd_data* data = (eztd_data*)user_data;
+    eztd_data_t data;
+    memcpy_P(&data, user_data, sizeof(eztd_data_t));
 #   if TAP_CODE_DELAY > 0
         wait_ms(TAP_CODE_DELAY);
 #   endif
     // send key up event when tap dance is reset.
-    switch (data->step) {
-        case EZTD_SINGLE_TAP: eztd_key_event(data->tap, false); break;
-        case EZTD_SINGLE_HOLD: eztd_key_event(data->hold, false); break;
-        case EZTD_DOUBLE_TAP: eztd_key_event(data->double_tap, false); break;
-        case EZTD_DOUBLE_HOLD: eztd_key_event(data->double_hold, false); break;
-        case EZTD_TRIPLE_TAP: eztd_key_event(data->triple_tap, false); break;
-        case EZTD_TRIPLE_HOLD: eztd_key_event(data->triple_hold, false); break;
+    switch (eztd_states[state->state_idx].step) {
+        case EZTD_SINGLE_TAP: eztd_key_event(data.tap, XXXXXXX, 1, false); break;
+        case EZTD_SINGLE_HOLD: eztd_key_event(data.hold, data.tap, 1, false); break;
+        case EZTD_DOUBLE_TAP: eztd_key_event(data.double_tap, data.tap, 2, false); break;
+        case EZTD_DOUBLE_HOLD: eztd_key_event(data.double_hold, data.tap, 2, false); break;
+        case EZTD_TRIPLE_TAP: eztd_key_event(data.triple_tap, data.tap, 3, false); break;
+        case EZTD_TRIPLE_HOLD: eztd_key_event(data.triple_hold, data.tap, 3, false); break;
         // no default case: cases for over taps handled in eztd_each()
     }
-    data->step = EZTD_UNPRESSED;
+    eztd_states[state->state_idx].step = EZTD_UNPRESSED;
 }
