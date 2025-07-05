@@ -19,15 +19,27 @@
 #define ezovrd_make_basic(trigger_mods, trigger_key, replacement_key) \
     ezovrd_make_with_layers(trigger_mods, trigger_key, replacement_key, ~0)
 
+#define ezovrd_make_unsuppressed(trigger_mods, trigger_key, replacement_key) \
+    ezovrd_make_unsuppressed_with_layers(trigger_mods, trigger_key, replacement_key, ~0)
+
 #define ezovrd_make_with_layers(trigger_mods, trigger_key, replacement_key, layers) \
     ezovrd_make_with_layers_and_negmods(trigger_mods, trigger_key, replacement_key, layers, 0)
+
+#define ezovrd_make_unsuppressed_with_layers(trigger_mods, trigger_key, replacement_key, layers) \
+    ezovrd_make_unsuppressed_with_layers_and_negmods(trigger_mods, trigger_key, replacement_key, layers, 0)
 
 #define ezovrd_make_with_layers_and_negmods(trigger_mods, trigger_key, replacement_key, layers, negative_mask) \
     ezovrd_make_with_layers_negmods_and_options(trigger_mods, trigger_key, replacement_key, layers, negative_mask, ko_options_default)
 
+#define ezovrd_make_unsuppressed_with_layers_and_negmods(trigger_mods, trigger_key, replacement_key, layers, negative_mask) \
+    ezovrd_make_unsuppressed_with_layers_negmods_and_options(trigger_mods, trigger_key, replacement_key, layers, negative_mask, ko_options_default)
 
 #define ezovrd_make_with_layers_negmods_and_options(trigger_mods_, trigger_key, replacement_key, layer_mask, negative_mask, options_) \
     ((const key_override_t){.trigger_mods = (trigger_mods_), .layers = (layer_mask), .suppressed_mods = (trigger_mods_), .options = (options_), .negative_mod_mask = (negative_mask),\
-    .custom_action  = (ezovrd_key_event), .context = (void *)(replacement_key), .trigger = (trigger_key), .replacement = (replacement_key), .enabled = NULL})
+    .custom_action  = (ezovrd_key_event), .context = (void *)(replacement_key), .trigger = (trigger_key), .replacement = (replacement_key)})
+
+#define ezovrd_make_unsuppressed_with_layers_negmods_and_options(trigger_mods_, trigger_key, replacement_key, layer_mask, negative_mask, options_) \
+    ((const key_override_t){.trigger_mods = (trigger_mods_), .layers = (layer_mask), .options = (options_), .negative_mod_mask = (negative_mask),\
+    .custom_action  = (ezovrd_key_event), .context = (void *)(replacement_key), .trigger = (trigger_key), .replacement = (replacement_key)})
 
 bool ezovrd_key_event(bool pressed, void *context);
