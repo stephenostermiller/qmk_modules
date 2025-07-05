@@ -18,18 +18,6 @@
 
 #include "process_tap_dance.h"
 
-enum {
-    EZTD_UNPRESSED, // initial state and state after reset
-    EZTD_SINGLE_TAP, // key tapped once
-    EZTD_SINGLE_HOLD, // key pressed once and held
-    EZTD_DOUBLE_TAP, // key tapped twice
-    EZTD_DOUBLE_HOLD, // key held on second press
-    EZTD_TRIPLE_TAP, // key tapped thrice
-    EZTD_TRIPLE_HOLD, // key held on third press
-    EZTD_FIRST_OVERTAP, // key was tapped exactly one more time than it has configuration to handle
-    EZTD_NTH_OVERTAP, // key was tapped additional extra times
-};
-
 typedef struct {
     // when the dance is interrupted by another key getting pressed,
     // should it use the single tap action?
@@ -46,11 +34,6 @@ typedef struct {
     uint16_t triple_tap; // code to send when key tapped thrice
     uint16_t triple_hold; // code to send when key held on third press
 } eztd_data_t;
-
-typedef struct {
-    // mutable, holds the computed dance_step between function calls
-    uint8_t step;
-} eztd_state_t;
 
 void eztd_each(tap_dance_state_t *state, void *user_data);
 void eztd_finished(tap_dance_state_t *state, void *user_data);
