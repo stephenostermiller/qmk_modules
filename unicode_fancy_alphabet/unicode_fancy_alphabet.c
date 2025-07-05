@@ -56,6 +56,12 @@ const unicode_fancy_alphabet_t unicode_fancy_alphabets[] PROGMEM = {
         0x1d552, // 𝕒
         0x1d538, // 𝔸
     },
+    [UNICODE_FANCY_ALPHABET_WIDE] = {
+        0xFF10, // ０
+        0xFF11, // １
+        0xFF41, // ａ
+        0xFF21, // Ａ
+    },
     [UNICODE_FANCY_ALPHABET_BOLD] = {
         0x1d7ce, // 𝟎
         0x1d7cf, // 𝟏
@@ -135,6 +141,9 @@ void unicode_fancy_alphabet_cycle(void) {
     unicode_fancy_alphabet_set(next);
 }
 
+__attribute__((weak)) void unicode_fancy_alphabet_set_user(uint8_t alphabet) {
+}
+
 void unicode_fancy_alphabet_set(uint8_t alphabet) {
     if (alphabet >= UNICODE_FANCY_ALPHABET_LAST) {
         return;
@@ -143,7 +152,7 @@ void unicode_fancy_alphabet_set(uint8_t alphabet) {
         unicode_fancy_alphabet_last = unicode_fancy_alphabet_current;
     }
     unicode_fancy_alphabet_current = alphabet;
-    layer_state_set_user(layer_state);
+    unicode_fancy_alphabet_set_user(alphabet);
 }
 
 uint8_t unicode_fancy_alphabet_get(void) {
@@ -240,9 +249,60 @@ bool _process_record_unicode_fancy_alphabet(uint16_t keycode, keyrecord_t *recor
 bool process_record_unicode_fancy_alphabet(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         switch (keycode) {
-            case UNICODE_FANCY_ALPHABET_CYCLE:
-            case UNICODE_FANCY_ALPHABET_MOMENTARY:
+            case KC_UNICODE_FANCY_ALPHABET_CYCLE:
+            case KC_UNICODE_FANCY_ALPHABET_MOMENTARY:
                 unicode_fancy_alphabet_cycle();
+                return false;
+            case KC_UNICODE_FANCY_ALPHABET_OFF:
+                unicode_fancy_alphabet_set(UNICODE_FANCY_ALPHABET_NONE);
+                return false;
+            case KC_UNICODE_FANCY_ALPHABET_DOUBLE_STRUCK:
+                unicode_fancy_alphabet_set(UNICODE_FANCY_ALPHABET_DOUBLE_STRUCK);
+                return false;
+            case KC_UNICODE_FANCY_ALPHABET_CIRCLED:
+                unicode_fancy_alphabet_set(UNICODE_FANCY_ALPHABET_CIRCLED);
+                return false;
+            case KC_UNICODE_FANCY_ALPHABET_NEGATIVE_CIRCLED:
+                unicode_fancy_alphabet_set(UNICODE_FANCY_ALPHABET_NEGATIVE_CIRCLED);
+                return false;
+            case KC_UNICODE_FANCY_ALPHABET_SQUARED:
+                unicode_fancy_alphabet_set(UNICODE_FANCY_ALPHABET_SQUARED);
+                return false;
+            case KC_UNICODE_FANCY_ALPHABET_NEGATIVE_SQUARED:
+                unicode_fancy_alphabet_set(UNICODE_FANCY_ALPHABET_NEGATIVE_SQUARED);
+                return false;
+            case KC_UNICODE_FANCY_ALPHABET_SCRIPT:
+                unicode_fancy_alphabet_set(UNICODE_FANCY_ALPHABET_SCRIPT);
+                return false;
+            case KC_UNICODE_FANCY_ALPHABET_SCRIPT_BOLD:
+                unicode_fancy_alphabet_set(UNICODE_FANCY_ALPHABET_SCRIPT_BOLD);
+                return false;
+            case KC_UNICODE_FANCY_ALPHABET_FRAKTUR:
+                unicode_fancy_alphabet_set(UNICODE_FANCY_ALPHABET_FRAKTUR);
+                return false;
+            case KC_UNICODE_FANCY_ALPHABET_FRAKTUR_BOLD:
+                unicode_fancy_alphabet_set(UNICODE_FANCY_ALPHABET_FRAKTUR_BOLD);
+                return false;
+            case KC_UNICODE_FANCY_ALPHABET_REGIONAL:
+                unicode_fancy_alphabet_set(UNICODE_FANCY_ALPHABET_REGIONAL);
+                return false;
+            case KC_UNICODE_FANCY_ALPHABET_MONOSPACED:
+                unicode_fancy_alphabet_set(UNICODE_FANCY_ALPHABET_MONOSPACED);
+                return false;
+            case KC_UNICODE_FANCY_ALPHABET_ITALIC:
+                unicode_fancy_alphabet_set(UNICODE_FANCY_ALPHABET_ITALIC);
+                return false;
+            case KC_UNICODE_FANCY_ALPHABET_BOLD_ITALIC:
+                unicode_fancy_alphabet_set(UNICODE_FANCY_ALPHABET_BOLD_ITALIC);
+                return false;
+            case KC_UNICODE_FANCY_ALPHABET_BOLD:
+                unicode_fancy_alphabet_set(UNICODE_FANCY_ALPHABET_BOLD);
+                return false;
+            case KC_UNICODE_FANCY_ALPHABET_WIDE:
+                unicode_fancy_alphabet_set(UNICODE_FANCY_ALPHABET_WIDE);
+                return false;
+            case KC_UNICODE_FANCY_ALPHABET_RANSOM:
+                unicode_fancy_alphabet_set(UNICODE_FANCY_ALPHABET_RANSOM);
                 return false;
             case KC_ESC:
                 if (unicode_fancy_alphabet_current == UNICODE_FANCY_ALPHABET_NONE) {
@@ -253,7 +313,7 @@ bool process_record_unicode_fancy_alphabet(uint16_t keycode, keyrecord_t *record
             case KC_A ... KC_0:
                 return _process_record_unicode_fancy_alphabet(keycode, record);
         }
-    } else if (keycode == UNICODE_FANCY_ALPHABET_MOMENTARY){
+    } else if (keycode == KC_UNICODE_FANCY_ALPHABET_MOMENTARY){
         unicode_fancy_alphabet_set(UNICODE_FANCY_ALPHABET_NONE);
         return false;
     }

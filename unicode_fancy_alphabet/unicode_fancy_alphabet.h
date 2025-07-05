@@ -31,6 +31,7 @@ enum unicode_fancy_alphabet_enum {
 	UNICODE_FANCY_ALPHABET_ITALIC,
 	UNICODE_FANCY_ALPHABET_BOLD_ITALIC,
     UNICODE_FANCY_ALPHABET_BOLD,
+    UNICODE_FANCY_ALPHABET_WIDE,
 	// Virtual alphabets come next to last
     UNICODE_FANCY_ALPHABET_RANSOM,
 	// Keep this at the end of the list
@@ -40,3 +41,4 @@ enum unicode_fancy_alphabet_enum {
 void unicode_fancy_alphabet_cycle(void);
 void unicode_fancy_alphabet_set(uint8_t alphabet);
 uint8_t unicode_fancy_alphabet_get(void);
+void unicode_fancy_alphabet_set_user(uint8_t alphabet);

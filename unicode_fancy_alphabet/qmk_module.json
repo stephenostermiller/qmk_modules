@@ -2,14 +2,85 @@
     "module_name": "Unicode Fancy Alphabet",
     "maintainer": "Stephen Ostermiller",
     "license": "GPL-2.0-or-later",
+    "features":{
+        "unicode_common":true
+    },
     "keycodes": [
         {
-            "key": "UNICODE_FANCY_ALPHABET_CYCLE",
+            "key": "KC_UNICODE_FANCY_ALPHABET_CYCLE",
             "aliases": ["UFA_CYC"]
         },
         {
-            "key": "UNICODE_FANCY_ALPHABET_MOMENTARY",
+            "key": "KC_UNICODE_FANCY_ALPHABET_MOMENTARY",
             "aliases": ["UFA_MO"]
+        },
+        {
+            "key": "KC_UNICODE_FANCY_ALPHABET_OFF",
+            "aliases": ["UFA_OFF"]
+        },
+        {
+            "key": "KC_UNICODE_FANCY_ALPHABET_DOUBLE_STRUCK",
+            "aliases": ["UFA_DS"]
+        },
+        {
+            "key": "KC_UNICODE_FANCY_ALPHABET_CIRCLED",
+            "aliases": ["UFA_CIR"]
+        },
+        {
+            "key": "KC_UNICODE_FANCY_ALPHABET_NEGATIVE_CIRCLED",
+            "aliases": ["UFA_NC"]
+        },
+        {
+            "key": "KC_UNICODE_FANCY_ALPHABET_SQUARED",
+            "aliases": ["UFA_SQ"]
+        },
+        {
+            "key": "KC_UNICODE_FANCY_ALPHABET_NEGATIVE_SQUARED",
+            "aliases": ["UFA_NSQ"]
+        },
+        {
+            "key": "KC_UNICODE_FANCY_ALPHABET_SCRIPT",
+            "aliases": ["UFA_SCR"]
+        },
+        {
+            "key": "KC_UNICODE_FANCY_ALPHABET_SCRIPT_BOLD",
+            "aliases": ["UFA_SB"]
+        },
+        {
+            "key": "KC_UNICODE_FANCY_ALPHABET_FRAKTUR",
+            "aliases": ["UFA_FRK"]
+        },
+        {
+            "key": "KC_UNICODE_FANCY_ALPHABET_FRAKTUR_BOLD",
+            "aliases": ["UFA_FB"]
+        },
+        {
+            "key": "KC_UNICODE_FANCY_ALPHABET_REGIONAL",
+            "aliases": ["UFA_REG"]
+        },
+        {
+            "key": "KC_UNICODE_FANCY_ALPHABET_MONOSPACED",
+            "aliases": ["UFA_MON"]
+        },
+        {
+            "key": "KC_UNICODE_FANCY_ALPHABET_ITALIC",
+            "aliases": ["UFA_ITC"]
+        },
+        {
+            "key": "KC_UNICODE_FANCY_ALPHABET_BOLD_ITALIC",
+            "aliases": ["UFA_BI"]
+        },
+        {
+            "key": "KC_UNICODE_FANCY_ALPHABET_BOLD",
+            "aliases": ["UFA_BLD"]
+        },
+        {
+            "key": "KC_UNICODE_FANCY_ALPHABET_WIDE",
+            "aliases": ["UFA_WDE"]
+        },
+        {
+            "key": "KC_UNICODE_FANCY_ALPHABET_RANSOM",
+            "aliases": ["UFA_RSM"]
         }
     ]
 }
