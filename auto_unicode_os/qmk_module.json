@@ -3,6 +3,7 @@
     "maintainer": "Stephen Ostermiller",
     "license": "GPL-2.0-or-later",
     "features":{
-        "os_detection":true
+        "os_detection":true,
+        "unicode_common":true
     }
 }
