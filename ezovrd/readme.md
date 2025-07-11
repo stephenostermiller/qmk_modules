@@ -8,16 +8,47 @@ const key_override_t *key_overrides[] = {
 };
 ```
 
-This module provides upgraded functions with similar method signatures to the built in qmk overrides, but which support advanced keycodes.
+## Features
+
+This module provides functions with similar method signatures to the built in qmk overrides but with upgrades
+
+### Specify modifier on the trigger keycode
+
+To override shift for the numeral one, pass `S(KC_1)` as the first argument.
+
+### Support for advanced keycodes
+
+Unlike built in overrides, you can use advanced keycodes for the key replacement such as:
+
+- Unicode characters
+- Layer switching
+- Caps word toggle
+
+### Automatic mod suppression
+
+Trigger mods are suppressed mods unless they are replacement key code mods. For example if you want to make shift-1 type `'` and shift-2 type `"`, you can use:
 
 ```c
-ezovrd_make_basic(trigger_mods, trigger_key, replacement_key);
+const key_override_t *key_overrides[] = {
+    &ezovrd_make_basic(S(KC_1), KC_QUOTE),
+    &ezovrd_make_basic(S(KC_2), S(KC_QUOTE)),
+}
+```
 
-ezovrd_make_with_layers(trigger_mods, trigger_key, replacement_key, layers);
+This will do the right thing with mod suppression in both cases.
+For shift-1, the shift key is suppressed and an (un-shifted) apostrophe is typed.
+For the shift-2, the shift key is NOT suppressed, so that the double quote (which requires the shift) gets typed.
 
-ezovrd_make_with_layers_and_negmods(trigger_mods, trigger_key, replacement_key, layers, negative_mask);
+## Available functions
 
-ezovrd_make_with_layers_negmods_and_options(trigger_mods_, trigger_key, replacement_key, layer_mask, negative_mask, options_);
+```c
+ezovrd_make_basic(trigger_key, replacement_key);
+
+ezovrd_make_with_layers(trigger_key, replacement_key, layers);
+
+ezovrd_make_with_layers_and_negmods(trigger_key, replacement_key, layers, negative_mask);
+
+ezovrd_make_with_layers_negmods_and_options(trigger_key, replacement_key, layer_mask, negative_mask, options_);
 ```
 
 ## Installation
