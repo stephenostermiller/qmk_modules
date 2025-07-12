@@ -44,12 +44,10 @@ For the shift-2, the shift key is NOT suppressed, so that the double quote (whic
 ```c
 ezovrd_make_basic(trigger_key, replacement_key);
 
-ezovrd_make_with_layers(trigger_key, replacement_key, layers);
-
-ezovrd_make_with_layers_and_negmods(trigger_key, replacement_key, layers, negative_mask);
-
-ezovrd_make_with_layers_negmods_and_options(trigger_key, replacement_key, layer_mask, negative_mask, options_);
+ezovrd_make_pre_modified(trigger_key, replacement_key, layers);
 ```
+`ezovrd_make_pre_modified` should be used when the keymap has a shifted character promoted to a unshifted key. For example, `S(KC_1)` in your keymap so that the
+exclamation point is the main key. Use `&ezovrd_make_pre_modified(S(KC_1), KC_1)` to override shift on an already shifted key.
 
 ## Installation
 

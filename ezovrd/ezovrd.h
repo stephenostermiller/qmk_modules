@@ -23,19 +23,14 @@
 #define EZOVRD_MODS_REMOVE(kc) (kc & 0xE0FF)
 
 // Remove the bits from the mod_mask that match the modifiers on the keycode
-#define EZOVRD_GET_SUPPRESS(trigger_key, replacement_key) (EZOVRD_MODS_GET_MASK(trigger_key) - (EZOVRD_MODS_GET_MASK(trigger_key) & EZOVRD_MODS_GET_MASK(replacement_key)))
+#define EZOVRD_GET_SUPPRESS(mod_mask, replacement_key) (mod_mask - (mod_mask & EZOVRD_MODS_GET_MASK(replacement_key)))
 
 #define ezovrd_make_basic(trigger_key, replacement_key) \
-    ezovrd_make_with_layers(trigger_key, replacement_key, ~0)
-
-#define ezovrd_make_with_layers(trigger_key, replacement_key, layers) \
-    ezovrd_make_with_layers_and_negmods(trigger_key, replacement_key, layers, 0)
-
-#define ezovrd_make_with_layers_and_negmods(trigger_key, replacement_key, layers, negative_mask) \
-    ezovrd_make_with_layers_negmods_and_options(trigger_key, replacement_key, layers, negative_mask, ko_options_default)
-
-#define ezovrd_make_with_layers_negmods_and_options(trigger_key, replacement_key, layer_mask, negative_mask, options_) \
-    ((const key_override_t){.trigger_mods = EZOVRD_MODS_GET_MASK(trigger_key), .layers = (layer_mask), .suppressed_mods = EZOVRD_GET_SUPPRESS((trigger_key), (replacement_key)), .options = (options_), .negative_mod_mask = (negative_mask),\
+    ((const key_override_t){.trigger_mods = EZOVRD_MODS_GET_MASK(trigger_key), .layers = ~0, .suppressed_mods = EZOVRD_GET_SUPPRESS(EZOVRD_MODS_GET_MASK(trigger_key), (replacement_key)), .options = ko_options_default, .negative_mod_mask = 0,\
     .custom_action  = (ezovrd_key_event), .context = (void *)(replacement_key), .trigger = EZOVRD_MODS_REMOVE(trigger_key), .replacement = (replacement_key)})
+
+#define ezovrd_make_pre_modified(trigger_key, replacement_key) \
+    ((const key_override_t){.trigger_mods = EZOVRD_MODS_GET_MASK(trigger_key), .layers = ~0, .suppressed_mods = EZOVRD_GET_SUPPRESS(EZOVRD_MODS_GET_MASK(trigger_key), (replacement_key)), .options = ko_options_default, .negative_mod_mask = 0,\
+    .custom_action  = (ezovrd_key_event), .context = (void *)(replacement_key), .trigger = (trigger_key), .replacement = (replacement_key)})
 
 bool ezovrd_key_event(bool pressed, void *context);
