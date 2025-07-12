@@ -37,6 +37,7 @@ Unlike basic tap dance functionality included with QMK, you can use use modifier
 | `EZTD_FLOWTAP_HOLD_DHOLD()` | Sends single taps | **Argument 1** | **Argument 2** | Single tap 2 times | **Argument 3** | Single tap 3 times | Single tap 3 times | Single tap N times |
 | `EZTD_TAP_HOLD_DTAP_DHOLD()` | Sends hold | **Argument 1** | **Argument 2** | **Argument 3** | **Argument 4** | Single tap 3 times | Single tap 3 times | Single tap N times |
 | `EZTD_FLOWTAP_HOLD_DTAP_DHOLD()` | Sends single taps | **Argument 1** | **Argument 2** | **Argument 3** | **Argument 4** | Single tap 3 times | Single tap 3 times | Single tap N times |
+| `EZTD_FLOWTAP_HOLD_DTAP_TTAP()` | Sends single taps | **Argument 1** | **Argument 2** | **Argument 3** | Same as double tap | **Argument 4** | Same as triple tap | Single tap N times |
 | `EZTD_FLOWTAP_HOLD_DHOLD_THOLD()` | Sends single taps | **Argument 1** | **Argument 2** | Single tap 2 times | **Argument 3** | Single tap 3 times | **Argument 4** | Single tap N times |
 | `EZTD_FLOWTAP_HOLD_DHOLD_TTAP()` | Sends single taps | **Argument 1** | **Argument 2** | Single tap 2 times | **Argument 3** | **Argument 4** | Same as triple tap | Single tap N times |
 | `EZTD_TAP_HOLD_DTAP_DHOLD_TTAP()` | Sends hold | **Argument 1** | **Argument 2** | **Argument 3** | **Argument 4** | **Argument 5** | Same as triple tap | Single tap N times |

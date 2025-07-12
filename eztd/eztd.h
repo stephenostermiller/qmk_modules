@@ -78,6 +78,9 @@ void eztd_keyevent(uint16_t keycode, bool pressed);
 #define EZTD_TAP_HOLD_DTAP_DHOLD(single_tap_keycode, single_hold_keycode, double_tap_keycode, double_hold_keycode) \
     {false, (single_tap_keycode), (single_hold_keycode), (double_tap_keycode), (double_hold_keycode), XXXXXXX, XXXXXXX}
 
+#define EZTD_FLOWTAP_HOLD_DTAP_TTAP(single_tap_keycode, single_hold_keycode, double_tap_keycode, triple_tap_keycode) \
+    {true, (single_tap_keycode), (single_hold_keycode), (double_tap_keycode), (double_tap_keycode), (triple_tap_keycode), (triple_tap_keycode)}
+
 #define EZTD_FLOWTAP_HOLD_DTAP_DHOLD(single_tap_keycode, single_hold_keycode, double_tap_keycode, double_hold_keycode) \
     {true, (single_tap_keycode), (single_hold_keycode), (double_tap_keycode), (double_hold_keycode), XXXXXXX, XXXXXXX}
 
