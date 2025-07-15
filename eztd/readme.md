@@ -21,30 +21,41 @@ Unlike basic tap dance functionality included with QMK, you can use use modifier
 
 ### Provides functions with different combinations of key presses
 
-| Function | When interrupted by another key | Single tap | Single hold | Double tap | Double hold | Triple tap | Triple hold | Four or more taps |
-|----|----|----|----|----|----|----|----|----|
-| `EZTD_TAP_DTAP()` | Sends hold | **Argument 1** | Same as single tap | **Argument 2** | Same as double tap | Single tap 3 times | Single tap 3 times | Single tap N times |
-| `EZTD_FLOWTAP_DTAP()` | Sends single taps | **Argument 1** | Same as single tap | **Argument 2** | Same as double tap | Single tap 3 times | Single tap 3 times | Single tap N times |
-| `EZTD_TAP_HOLD()` | Sends hold | **Argument 1** | **Argument 2** | Single tap 2 times | Single tap 2 times | Single tap 3 times | Single tap 3 times |  Single tap N times |
-| `EZTD_FLOWTAP_HOLD()` | Sends single taps | **Argument 1** | **Argument 2** | Single tap 2 times | Single tap 2 times | Single tap 3 times | Single tap 3 times |  Single tap N times |
-| `EZTD_FLOWTAP_TTAP()` | Sends single taps | **Argument 1** | Same as single tap | Single tap 2 times | Single tap 2 times | **Argument 2** | Same as triple tap | Single tap N times |
-| `EZTD_TAP_HOLD_DTAP()` | Sends hold | **Argument 1** | **Argument 2** | **Argument 3** | Same as double tap | Single tap 3 times | Single tap 3 times | Single tap N times |
-| `EZTD_FLOWTAP_HOLD_DTAP()` | Sends single taps | **Argument 1** | **Argument 2** | **Argument 3** | Same as double tap | Single tap 3 times | Single tap 3 times | Single tap N times |
-| `EZTD_FLOWTAP_HOLD_DTAP()` | Sends single taps | **Argument 1** | **Argument 2** | **Argument 3** | Same as double tap | Single tap 3 times | Single tap 3 times | Single tap N times |
-| `EZTD_FLOWTAP_HOLD_TTAP()` | Sends single taps | **Argument 1** | **Argument 2** | Single tap 2 times | Single tap 2 times | **Argument 3** | Same as triple tap | Single tap N times |
-| `EZTD_TAP_DTAP_TTAP()` | Sends hold | **Argument 1** | Same as single tap | **Argument 2** | Same as double tap | **Argument 3** | Same as triple tap | Single tap N times |
-| `EZTD_FLOWTAP_DTAP_TTAP()` | Sends single taps | **Argument 1** | Same as single tap | **Argument 2** | Same as double tap | **Argument 3** | Same as triple tap | Single tap N times |
-| `EZTD_FLOWTAP_HOLD_DHOLD()` | Sends single taps | **Argument 1** | **Argument 2** | Single tap 2 times | **Argument 3** | Single tap 3 times | Single tap 3 times | Single tap N times |
-| `EZTD_TAP_HOLD_DTAP_DHOLD()` | Sends hold | **Argument 1** | **Argument 2** | **Argument 3** | **Argument 4** | Single tap 3 times | Single tap 3 times | Single tap N times |
-| `EZTD_FLOWTAP_HOLD_DTAP_DHOLD()` | Sends single taps | **Argument 1** | **Argument 2** | **Argument 3** | **Argument 4** | Single tap 3 times | Single tap 3 times | Single tap N times |
-| `EZTD_FLOWTAP_HOLD_DTAP_TTAP()` | Sends single taps | **Argument 1** | **Argument 2** | **Argument 3** | Same as double tap | **Argument 4** | Same as triple tap | Single tap N times |
-| `EZTD_FLOWTAP_HOLD_DHOLD_THOLD()` | Sends single taps | **Argument 1** | **Argument 2** | Single tap 2 times | **Argument 3** | Single tap 3 times | **Argument 4** | Single tap N times |
-| `EZTD_FLOWTAP_HOLD_DHOLD_TTAP()` | Sends single taps | **Argument 1** | **Argument 2** | Single tap 2 times | **Argument 3** | **Argument 4** | Same as triple tap | Single tap N times |
-| `EZTD_TAP_HOLD_DTAP_DHOLD_TTAP()` | Sends hold | **Argument 1** | **Argument 2** | **Argument 3** | **Argument 4** | **Argument 5** | Same as triple tap | Single tap N times |
-| `EZTD_FLOWTAP_HOLD_DTAP_DHOLD_TTAP()` | Sends single taps | **Argument 1** | **Argument 2** | **Argument 3** | **Argument 4** | **Argument 5** | Same as triple tap | Single tap N times |
-| `EZTD_FLOWTAP_HOLD_DHOLD_TTAP_THOLD()` | Sends single taps | **Argument 1** | **Argument 2** | Single tap 2 times | **Argument 3** | **Argument 4** | **Argument 5** | Single tap N times |
-| `EZTD_TAP_HOLD_DTAP_DHOLD_TTAP_THOLD()` | Sends hold | **Argument 1** | **Argument 2** | **Argument 3** | **Argument 4** | **Argument 5** | **Argument 6** | Single tap N times |
-| `EZTD_FLOWTAP_HOLD_DTAP_DHOLD_TTAP_THOLD()` | Sends single taps | **Argument 1** | **Argument 2** | **Argument 3** | **Argument 4** | **Argument 5** | **Argument 6** | Single tap N times |
+| Function | When interrupted by another key | When held | Single tap | Single hold | Double tap | Double hold | Triple tap | Triple hold | Four or more taps |
+|----|----|----|----|----|----|----|----|----|----|
+| `EZTD_TAP_DTAP()` | Sends hold | Holds / repeats |**Argument 1** | Same as single tap | **Argument 2** | Same as double tap | Single tap 3 times | Single tap 3 times | Single tap N times |
+| `EZTD_FLOWTAP_DTAP()` | Sends single taps | Holds / repeats |**Argument 1** | Same as single tap | **Argument 2** | Same as double tap | Single tap 3 times | Single tap 3 times | Single tap N times |
+| `EZTD_TAP_HOLD()` | Sends hold | Holds / repeats |**Argument 1** | **Argument 2** | Single tap 2 times | Single tap 2 times | Single tap 3 times | Single tap 3 times |  Single tap N times |
+| `EZTD_FLOWTAP_HOLD()` | Sends single taps | Holds / repeats |**Argument 1** | **Argument 2** | Single tap 2 times | Single tap 2 times | Single tap 3 times | Single tap 3 times |  Single tap N times |
+| `EZTD_ALLTAP_HOLD()` | Sends single taps | Taps |**Argument 1** | **Argument 2** | Single tap 2 times | Single tap 2 times | Single tap 3 times | Single tap 3 times |  Single tap N times |
+| `EZTD_FLOWTAP_TTAP()` | Sends single taps | Holds / repeats |**Argument 1** | Same as single tap | Single tap 2 times | Single tap 2 times | **Argument 2** | Same as triple tap | Single tap N times |
+| `EZTD_TAP_HOLD_DTAP()` | Sends hold | Holds / repeats |**Argument 1** | **Argument 2** | **Argument 3** | Same as double tap | Single tap 3 times | Single tap 3 times | Single tap N times |
+| `EZTD_FLOWTAP_HOLD_DTAP()` | Sends single taps | Holds / repeats |**Argument 1** | **Argument 2** | **Argument 3** | Same as double tap | Single tap 3 times | Single tap 3 times | Single tap N times |
+| `EZTD_ALLTAP_HOLD_DTAP()` | Sends single taps | Taps |**Argument 1** | **Argument 2** | **Argument 3** | Same as double tap | Single tap 3 times | Single tap 3 times | Single tap N times |
+| `EZTD_FLOWTAP_HOLD_DTAP()` | Sends single taps | Holds / repeats |**Argument 1** | **Argument 2** | **Argument 3** | Same as double tap | Single tap 3 times | Single tap 3 times | Single tap N times |
+| `EZTD_ALLTAP_HOLD_DTAP()` | Sends single taps | Taps |**Argument 1** | **Argument 2** | **Argument 3** | Same as double tap | Single tap 3 times | Single tap 3 times | Single tap N times |
+| `EZTD_FLOWTAP_HOLD_TTAP()` | Sends single taps | Holds / repeats |**Argument 1** | **Argument 2** | Single tap 2 times | Single tap 2 times | **Argument 3** | Same as triple tap | Single tap N times |
+| `EZTD_ALLTAP_HOLD_TTAP()` | Sends single taps | Taps |**Argument 1** | **Argument 2** | Single tap 2 times | Single tap 2 times | **Argument 3** | Same as triple tap | Single tap N times |
+| `EZTD_TAP_DTAP_TTAP()` | Sends hold | Holds / repeats |**Argument 1** | Same as single tap | **Argument 2** | Same as double tap | **Argument 3** | Same as triple tap | Single tap N times |
+| `EZTD_FLOWTAP_DTAP_TTAP()` | Sends single taps | Holds / repeats |**Argument 1** | Same as single tap | **Argument 2** | Same as double tap | **Argument 3** | Same as triple tap | Single tap N times |
+| `EZTD_FLOWTAP_HOLD_DHOLD()` | Sends single taps | Holds / repeats |**Argument 1** | **Argument 2** | Single tap 2 times | **Argument 3** | Single tap 3 times | Single tap 3 times | Single tap N times |
+| `EZTD_ALLTAP_HOLD_DHOLD()` | Sends single taps | Taps |**Argument 1** | **Argument 2** | Single tap 2 times | **Argument 3** | Single tap 3 times | Single tap 3 times | Single tap N times |
+| `EZTD_TAP_HOLD_DTAP_DHOLD()` | Sends hold | Holds / repeats |**Argument 1** | **Argument 2** | **Argument 3** | **Argument 4** | Single tap 3 times | Single tap 3 times | Single tap N times |
+| `EZTD_FLOWTAP_HOLD_DTAP_DHOLD()` | Sends single taps | Holds / repeats |**Argument 1** | **Argument 2** | **Argument 3** | **Argument 4** | Single tap 3 times | Single tap 3 times | Single tap N times |
+| `EZTD_ALLTAP_HOLD_DTAP_DHOLD()` | Sends single taps | Taps |**Argument 1** | **Argument 2** | **Argument 3** | **Argument 4** | Single tap 3 times | Single tap 3 times | Single tap N times |
+| `EZTD_FLOWTAP_HOLD_DTAP_TTAP()` | Sends single taps | Holds / repeats |**Argument 1** | **Argument 2** | **Argument 3** | Same as double tap | **Argument 4** | Same as triple tap | Single tap N times |
+| `EZTD_ALLTAP_HOLD_DTAP_TTAP()` | Sends single taps | Taps |**Argument 1** | **Argument 2** | **Argument 3** | Same as double tap | **Argument 4** | Same as triple tap | Single tap N times |
+| `EZTD_FLOWTAP_HOLD_DHOLD_THOLD()` | Sends single taps | Holds / repeats |**Argument 1** | **Argument 2** | Single tap 2 times | **Argument 3** | Single tap 3 times | **Argument 4** | Single tap N times |
+| `EZTD_ALLTAP_HOLD_DHOLD_THOLD()` | Sends single taps | Taps |**Argument 1** | **Argument 2** | Single tap 2 times | **Argument 3** | Single tap 3 times | **Argument 4** | Single tap N times |
+| `EZTD_FLOWTAP_HOLD_DHOLD_TTAP()` | Sends single taps | Holds / repeats |**Argument 1** | **Argument 2** | Single tap 2 times | **Argument 3** | **Argument 4** | Same as triple tap | Single tap N times |
+| `EZTD_TAP_HOLD_DTAP_DHOLD_TTAP()` | Sends hold | Holds / repeats |**Argument 1** | **Argument 2** | **Argument 3** | **Argument 4** | **Argument 5** | Same as triple tap | Single tap N times |
+| `EZTD_FLOWTAP_HOLD_DTAP_DHOLD_TTAP()` | Sends single taps | Holds / repeats |**Argument 1** | **Argument 2** | **Argument 3** | **Argument 4** | **Argument 5** | Same as triple tap | Single tap N times |
+| `EZTD_ALLTAP_HOLD_DTAP_DHOLD_TTAP()` | Sends single taps | Taps |**Argument 1** | **Argument 2** | **Argument 3** | **Argument 4** | **Argument 5** | Same as triple tap | Single tap N times |
+| `EZTD_FLOWTAP_HOLD_DHOLD_TTAP_THOLD()` | Sends single taps | Holds / repeats |**Argument 1** | **Argument 2** | Single tap 2 times | **Argument 3** | **Argument 4** | **Argument 5** | Single tap N times |
+| `EZTD_ALLTAP_HOLD_DHOLD_TTAP_THOLD()` | Sends single taps | Taps |**Argument 1** | **Argument 2** | Single tap 2 times | **Argument 3** | **Argument 4** | **Argument 5** | Single tap N times |
+| `EZTD_TAP_HOLD_DTAP_DHOLD_TTAP_THOLD()` | Sends hold | Holds / repeats |**Argument 1** | **Argument 2** | **Argument 3** | **Argument 4** | **Argument 5** | **Argument 6** | Single tap N times |
+| `EZTD_FLOWTAP_HOLD_DTAP_DHOLD_TTAP_THOLD()` | Sends single taps | Holds / repeats |**Argument 1** | **Argument 2** | **Argument 3** | **Argument 4** | **Argument 5** | **Argument 6** | Single tap N times |
+| `EZTD_ALLTAP_HOLD_DTAP_DHOLD_TTAP_THOLD()` | Sends single taps | Taps |**Argument 1** | **Argument 2** | **Argument 3** | **Argument 4** | **Argument 5** | **Argument 6** | Single tap N times |
 
 ## Example
 

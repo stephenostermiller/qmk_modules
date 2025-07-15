@@ -25,7 +25,10 @@ typedef struct {
     // key is a number or letter.
     // This should usually be set to false when a hold action
     // is a modifier key.
-    bool interrupted_is_tap;
+    bool interrupted_is_tap: 1;
+    // When a key is held, send a single tap rather
+    // than letting the key repeat
+    bool held_keys_tap: 1;
     //  specify the keycode for actions
     uint16_t tap; // code to send when key tapped once
     uint16_t hold; // code to send when key pressed once and held
@@ -43,64 +46,94 @@ void eztd_keyevent(uint16_t keycode, bool pressed);
 #define EZTD_ACTION(config) {{eztd_each, eztd_finished, eztd_reset}, (void*)&(config)}
 
 #define EZTD_TAP_DTAP(single_tap_keycode, double_tap_keycode) \
-    {false, (single_tap_keycode), (single_tap_keycode), (double_tap_keycode), (double_tap_keycode), XXXXXXX, XXXXXXX}
+    {false, false, (single_tap_keycode), (single_tap_keycode), (double_tap_keycode), (double_tap_keycode), XXXXXXX, XXXXXXX}
 
 #define EZTD_FLOWTAP_DTAP(single_tap_keycode, double_tap_keycode) \
-    {true, (single_tap_keycode), (single_tap_keycode), (double_tap_keycode), (double_tap_keycode), XXXXXXX, XXXXXXX}
+    {true, false, (single_tap_keycode), (single_tap_keycode), (double_tap_keycode), (double_tap_keycode), XXXXXXX, XXXXXXX}
 
 #define EZTD_TAP_HOLD(single_tap_keycode, single_hold_keycode) \
-    {false, (single_tap_keycode), (single_hold_keycode), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX}
+    {false, false, (single_tap_keycode), (single_hold_keycode), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX}
 
 #define EZTD_FLOWTAP_HOLD(single_tap_keycode, single_hold_keycode) \
-    {true, (single_tap_keycode), (single_hold_keycode), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX}
+    {true, false, (single_tap_keycode), (single_hold_keycode), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX}
+
+#define EZTD_ALLTAP_HOLD(single_tap_keycode, single_hold_keycode) \
+    {true, true, (single_tap_keycode), (single_hold_keycode), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX}
 
 #define EZTD_FLOWTAP_TTAP(single_tap_keycode, triple_tap_keycode) \
-    {true, (single_tap_keycode), (single_tap_keycode), EZTD_MULTI_SINGLE, EZTD_MULTI_SINGLE, (triple_tap_keycode), (triple_tap_keycode)}
+    {true, false, (single_tap_keycode), (single_tap_keycode), EZTD_MULTI_SINGLE, EZTD_MULTI_SINGLE, (triple_tap_keycode), (triple_tap_keycode)}
 
 #define EZTD_TAP_HOLD_DTAP(single_tap_keycode, single_hold_keycode, double_tap_keycode) \
-    {false, (single_tap_keycode), (single_hold_keycode), (double_tap_keycode), (double_tap_keycode), XXXXXXX, XXXXXXX}
+    {false, false, (single_tap_keycode), (single_hold_keycode), (double_tap_keycode), (double_tap_keycode), XXXXXXX, XXXXXXX}
 
 #define EZTD_FLOWTAP_HOLD_DTAP(single_tap_keycode, single_hold_keycode, double_tap_keycode) \
-    {true, (single_tap_keycode), (single_hold_keycode), (double_tap_keycode), (double_tap_keycode), XXXXXXX, XXXXXXX}
+    {true, false, (single_tap_keycode), (single_hold_keycode), (double_tap_keycode), (double_tap_keycode), XXXXXXX, XXXXXXX}
+
+#define EZTD_ALLTAP_HOLD_DTAP(single_tap_keycode, single_hold_keycode, double_tap_keycode) \
+    {true, true, (single_tap_keycode), (single_hold_keycode), (double_tap_keycode), (double_tap_keycode), XXXXXXX, XXXXXXX}
 
 #define EZTD_FLOWTAP_HOLD_TTAP(single_tap_keycode, single_hold_keycode, triple_tap_keycode) \
-    {true, (single_tap_keycode), (single_hold_keycode), EZTD_MULTI_SINGLE, EZTD_MULTI_SINGLE, (triple_tap_keycode), (triple_tap_keycode)}
+    {true, false, (single_tap_keycode), (single_hold_keycode), EZTD_MULTI_SINGLE, EZTD_MULTI_SINGLE, (triple_tap_keycode), (triple_tap_keycode)}
+
+#define EZTD_ALLTAP_HOLD_TTAP(single_tap_keycode, single_hold_keycode, triple_tap_keycode) \
+    {true, true, (single_tap_keycode), (single_hold_keycode), EZTD_MULTI_SINGLE, EZTD_MULTI_SINGLE, (triple_tap_keycode), (triple_tap_keycode)}
 
 #define EZTD_TAP_DTAP_TTAP(single_tap_keycode, double_tap_keycode, triple_tap_keycode) \
-    {false, (single_tap_keycode), (single_tap_keycode), (double_tap_keycode), (double_tap_keycode), (triple_tap_keycode), (triple_tap_keycode)}
+    {false, false, (single_tap_keycode), (single_tap_keycode), (double_tap_keycode), (double_tap_keycode), (triple_tap_keycode), (triple_tap_keycode)}
 
 #define EZTD_FLOWTAP_DTAP_TTAP(single_tap_keycode, double_tap_keycode, triple_tap_keycode) \
-    {true, (single_tap_keycode), (single_tap_keycode), (double_tap_keycode), (double_tap_keycode), (triple_tap_keycode), (triple_tap_keycode)}
+    {true, false, (single_tap_keycode), (single_tap_keycode), (double_tap_keycode), (double_tap_keycode), (triple_tap_keycode), (triple_tap_keycode)}
 
 #define EZTD_FLOWTAP_HOLD_DHOLD(single_tap_keycode, single_hold_keycode, double_hold_keycode) \
-    {true, (single_tap_keycode), (single_hold_keycode), EZTD_MULTI_SINGLE, (double_hold_keycode), XXXXXXX, XXXXXXX}
+    {true, false, (single_tap_keycode), (single_hold_keycode), EZTD_MULTI_SINGLE, (double_hold_keycode), XXXXXXX, XXXXXXX}
+
+#define EZTD_ALLTAP_HOLD_DHOLD(single_tap_keycode, single_hold_keycode, double_hold_keycode) \
+    {true, true, (single_tap_keycode), (single_hold_keycode), EZTD_MULTI_SINGLE, (double_hold_keycode), XXXXXXX, XXXXXXX}
 
 #define EZTD_TAP_HOLD_DTAP_DHOLD(single_tap_keycode, single_hold_keycode, double_tap_keycode, double_hold_keycode) \
-    {false, (single_tap_keycode), (single_hold_keycode), (double_tap_keycode), (double_hold_keycode), XXXXXXX, XXXXXXX}
+    {false, false, (single_tap_keycode), (single_hold_keycode), (double_tap_keycode), (double_hold_keycode), XXXXXXX, XXXXXXX}
 
 #define EZTD_FLOWTAP_HOLD_DTAP_TTAP(single_tap_keycode, single_hold_keycode, double_tap_keycode, triple_tap_keycode) \
-    {true, (single_tap_keycode), (single_hold_keycode), (double_tap_keycode), (double_tap_keycode), (triple_tap_keycode), (triple_tap_keycode)}
+    {true, false, (single_tap_keycode), (single_hold_keycode), (double_tap_keycode), (double_tap_keycode), (triple_tap_keycode), (triple_tap_keycode)}
+
+#define EZTD_ALLTAP_HOLD_DTAP_TTAP(single_tap_keycode, single_hold_keycode, double_tap_keycode, triple_tap_keycode) \
+    {true, true, (single_tap_keycode), (single_hold_keycode), (double_tap_keycode), (double_tap_keycode), (triple_tap_keycode), (triple_tap_keycode)}
 
 #define EZTD_FLOWTAP_HOLD_DTAP_DHOLD(single_tap_keycode, single_hold_keycode, double_tap_keycode, double_hold_keycode) \
-    {true, (single_tap_keycode), (single_hold_keycode), (double_tap_keycode), (double_hold_keycode), XXXXXXX, XXXXXXX}
+    {true, false, (single_tap_keycode), (single_hold_keycode), (double_tap_keycode), (double_hold_keycode), XXXXXXX, XXXXXXX}
+
+#define EZTD_ALLTAP_HOLD_DTAP_DHOLD(single_tap_keycode, single_hold_keycode, double_tap_keycode, double_hold_keycode) \
+    {true, true, (single_tap_keycode), (single_hold_keycode), (double_tap_keycode), (double_hold_keycode), XXXXXXX, XXXXXXX}
 
 #define EZTD_FLOWTAP_HOLD_DHOLD_THOLD(single_tap_keycode, single_hold_keycode, double_hold_keycode, triple_hold_keycode) \
-    {true, (single_tap_keycode), (single_hold_keycode), EZTD_MULTI_SINGLE, (double_hold_keycode), EZTD_MULTI_SINGLE, (triple_hold_keycode)}
+    {true, false, (single_tap_keycode), (single_hold_keycode), EZTD_MULTI_SINGLE, (double_hold_keycode), EZTD_MULTI_SINGLE, (triple_hold_keycode)}
 
-#define EZTD_FLOWTAP_HOLD_DHOLD_TTAP(single_tap_keycode, single_hold_keycode, double_hold_keycode, triple_tap_keycode) \
-    {true, (single_tap_keycode), (single_hold_keycode), EZTD_MULTI_SINGLE, (double_hold_keycode), (triple_tap_keycode), (triple_tap_keycode)}
+#define EZTD_FLOWTAP_HOLD_DHOLD_THOLD(single_tap_keycode, single_hold_keycode, double_hold_keycode, triple_hold_keycode) \
+    {true, false, (single_tap_keycode), (single_hold_keycode), EZTD_MULTI_SINGLE, (double_hold_keycode), EZTD_MULTI_SINGLE, (triple_hold_keycode)}
+
+#define EZTD_ALLTAP_HOLD_DHOLD_TTAP(single_tap_keycode, single_hold_keycode, double_hold_keycode, triple_tap_keycode) \
+    {true, true, (single_tap_keycode), (single_hold_keycode), EZTD_MULTI_SINGLE, (double_hold_keycode), (triple_tap_keycode), (triple_tap_keycode)}
 
 #define EZTD_TAP_HOLD_DTAP_DHOLD_TTAP(single_tap_keycode, single_hold_keycode, double_tap_keycode, double_hold_keycode, triple_tap_keycode) \
-    {false, (single_tap_keycode), (single_hold_keycode), (double_tap_keycode), (double_hold_keycode), (triple_tap_keycode), (triple_tap_keycode)}
+    {false, false, (single_tap_keycode), (single_hold_keycode), (double_tap_keycode), (double_hold_keycode), (triple_tap_keycode), (triple_tap_keycode)}
 
 #define EZTD_FLOWTAP_HOLD_DTAP_DHOLD_TTAP(single_tap_keycode, single_hold_keycode, double_tap_keycode, double_hold_keycode, triple_tap_keycode) \
-    {true, (single_tap_keycode), (single_hold_keycode), (double_tap_keycode), (double_hold_keycode), (triple_tap_keycode), (triple_tap_keycode)}
+    {true, false, (single_tap_keycode), (single_hold_keycode), (double_tap_keycode), (double_hold_keycode), (triple_tap_keycode), (triple_tap_keycode)}
+
+#define EZTD_ALLTAP_HOLD_DTAP_DHOLD_TTAP(single_tap_keycode, single_hold_keycode, double_tap_keycode, double_hold_keycode, triple_tap_keycode) \
+    {true, true, (single_tap_keycode), (single_hold_keycode), (double_tap_keycode), (double_hold_keycode), (triple_tap_keycode), (triple_tap_keycode)}
 
 #define EZTD_FLOWTAP_HOLD_DHOLD_TTAP_THOLD(single_tap_keycode, single_hold_keycode, double_hold_keycode, triple_tap_keycode, triple_hold_keycode) \
-    {true, (single_tap_keycode), (single_hold_keycode), EZTD_MULTI_SINGLE, (double_hold_keycode), (triple_tap_keycode), (triple_hold_keycode)}
+    {true, false, (single_tap_keycode), (single_hold_keycode), EZTD_MULTI_SINGLE, (double_hold_keycode), (triple_tap_keycode), (triple_hold_keycode)}
+
+#define EZTD_ALLTAP_HOLD_DHOLD_TTAP_THOLD(single_tap_keycode, single_hold_keycode, double_hold_keycode, triple_tap_keycode, triple_hold_keycode) \
+    {true, true, (single_tap_keycode), (single_hold_keycode), EZTD_MULTI_SINGLE, (double_hold_keycode), (triple_tap_keycode), (triple_hold_keycode)}
 
 #define EZTD_TAP_HOLD_DTAP_DHOLD_TTAP_THOLD(single_tap_keycode, single_hold_keycode, double_tap_keycode, double_hold_keycode, triple_tap_keycode, triple_hold_keycode) \
-    {false, (single_tap_keycode), (single_hold_keycode), (double_tap_keycode), (double_hold_keycode), (triple_tap_keycode), (triple_hold_keycode)}
+    {false, false, (single_tap_keycode), (single_hold_keycode), (double_tap_keycode), (double_hold_keycode), (triple_tap_keycode), (triple_hold_keycode)}
 
 #define EZTD_FLOWTAP_HOLD_DTAP_DHOLD_TTAP_THOLD(single_tap_keycode, single_hold_keycode, double_tap_keycode, double_hold_keycode, triple_tap_keycode, triple_hold_keycode) \
-    {true, (single_tap_keycode), (single_hold_keycode), (double_tap_keycode), (double_hold_keycode), (triple_tap_keycode), (triple_hold_keycode)}
+    {true, false, (single_tap_keycode), (single_hold_keycode), (double_tap_keycode), (double_hold_keycode), (triple_tap_keycode), (triple_hold_keycode)}
+
+#define EZTD_ALLTAP_HOLD_DTAP_DHOLD_TTAP_THOLD(single_tap_keycode, single_hold_keycode, double_tap_keycode, double_hold_keycode, triple_tap_keycode, triple_hold_keycode) \
+    {true, true, (single_tap_keycode), (single_hold_keycode), (double_tap_keycode), (double_hold_keycode), (triple_tap_keycode), (triple_hold_keycode)}

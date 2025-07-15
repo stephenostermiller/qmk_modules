@@ -39,7 +39,7 @@ typedef struct {
 // Mutable state array
 static eztd_state_t eztd_states[TAP_DANCE_MAX_SIMULTANEOUS];
 
-void eztd_key_event(tap_dance_state_t *state, uint16_t keycode, uint16_t single_tap, uint8_t single_count) {
+void eztd_key_event(tap_dance_state_t *state, uint16_t keycode, uint16_t single_tap, uint8_t single_count, bool held_keys_tap) {
     uint8_t i;
     uint8_t presses = 1;
 
@@ -84,9 +84,17 @@ void eztd_key_event(tap_dance_state_t *state, uint16_t keycode, uint16_t single_
         }
     }
 
-    // Save which key is being held into mutable state.
-    // The corresponding key up event will be sent in the reset callback.
-    eztd_states[state->state_idx].pressed_key = keycode;
+    if (held_keys_tap) {
+        // Send key up now rather than waiting until reset
+#       if TAP_CODE_DELAY > 0
+            wait_ms(TAP_CODE_DELAY);
+#       endif
+        process_keycode_any(keycode, false);
+    } else {
+        // Save which key is being held into mutable state.
+        // The corresponding key up event will be sent in the reset callback.
+        eztd_states[state->state_idx].pressed_key = keycode;
+    }
 }
 
 uint8_t eztd_step(tap_dance_state_t *state, eztd_data_t *data) {
@@ -140,7 +148,7 @@ uint8_t eztd_step(tap_dance_state_t *state, eztd_data_t *data) {
 
 void eztd_send_unsent_overtaps(tap_dance_state_t *state, eztd_data_t* data) {
     // Send all the over taps that haven't already been sent
-    eztd_key_event(state, EZTD_MULTI_SINGLE, data->tap, state->count - eztd_states[state->state_idx].overtaps_sent);
+    eztd_key_event(state, EZTD_MULTI_SINGLE, data->tap, state->count - eztd_states[state->state_idx].overtaps_sent, data->held_keys_tap);
     // Record that all taps have been sent in mutable state.
     eztd_states[state->state_idx].overtaps_sent = state->count;
 }
@@ -162,19 +170,23 @@ void eztd_finished(tap_dance_state_t *state, void *user_data) {
     memcpy_P(&data, user_data, sizeof(eztd_data_t));
     // send key down when tap dance is finished.
     switch (eztd_step(state, &data)) {
-        case EZTD_SINGLE_TAP: eztd_key_event(state, data.tap, XXXXXXX, 1); break;
-        case EZTD_SINGLE_HOLD: eztd_key_event(state, data.hold, data.tap, 1); break;
-        case EZTD_DOUBLE_TAP: eztd_key_event(state, data.double_tap, data.tap, 2); break;
-        case EZTD_DOUBLE_HOLD: eztd_key_event(state, data.double_hold, data.tap, 2); break;
-        case EZTD_TRIPLE_TAP: eztd_key_event(state, data.triple_tap, data.tap, 3); break;
-        case EZTD_TRIPLE_HOLD: eztd_key_event(state, data.triple_hold, data.tap, 3); break;
+        case EZTD_SINGLE_TAP: eztd_key_event(state, data.tap, XXXXXXX, 1, data.held_keys_tap); break;
+        case EZTD_SINGLE_HOLD: eztd_key_event(state, data.hold, data.tap, 1, data.held_keys_tap); break;
+        case EZTD_DOUBLE_TAP: eztd_key_event(state, data.double_tap, data.tap, 2, data.held_keys_tap); break;
+        case EZTD_DOUBLE_HOLD: eztd_key_event(state, data.double_hold, data.tap, 2, data.held_keys_tap); break;
+        case EZTD_TRIPLE_TAP: eztd_key_event(state, data.triple_tap, data.tap, 3, data.held_keys_tap); break;
+        case EZTD_TRIPLE_HOLD: eztd_key_event(state, data.triple_hold, data.tap, 3, data.held_keys_tap); break;
         case EZTD_OVERTAP: eztd_send_unsent_overtaps(state, &data); break;
     }
 }
 
 void eztd_reset(tap_dance_state_t *state, void *user_data) {
-    // Send key up when tap dance is reset.
-    process_keycode_any(eztd_states[state->state_idx].pressed_key, false);
+    eztd_data_t data;
+    memcpy_P(&data, user_data, sizeof(eztd_data_t));
+    if (!data.held_keys_tap) {
+        // Send key up when tap dance is reset.
+        process_keycode_any(eztd_states[state->state_idx].pressed_key, false);
+    }
     // Reset mutable state so it can be reused
     eztd_states[state->state_idx].pressed_key = 0;
     eztd_states[state->state_idx].overtaps_sent = 0;
