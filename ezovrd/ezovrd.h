@@ -19,18 +19,11 @@
 // Get the mods from the keycode and create a mask with BOTH the left and right modifiers
 #define EZOVRD_MODS_GET_MASK(kc) ((((kc) >> 8) & 0xF) | (((kc) >> 4) & 0xF0))
 
-// Remove the mods from the keycode
-#define EZOVRD_MODS_REMOVE(kc) (kc & 0xE0FF)
-
 // Remove the bits from the mod_mask that match the modifiers on the keycode
-#define EZOVRD_GET_SUPPRESS(mod_mask, replacement_key) (mod_mask - (mod_mask & EZOVRD_MODS_GET_MASK(replacement_key)))
+#define EZOVRD_GET_SUPPRESS(mod_mask, replacement_key) (IS_QK_MODS((uint16_t)(replacement_key))?(mod_mask - (mod_mask & EZOVRD_MODS_GET_MASK(replacement_key))):mod_mask)
 
-#define ezovrd_make_basic(trigger_key, replacement_key) \
-    ((const key_override_t){.trigger_mods = EZOVRD_MODS_GET_MASK(trigger_key), .layers = ~0, .suppressed_mods = EZOVRD_GET_SUPPRESS(EZOVRD_MODS_GET_MASK(trigger_key), (replacement_key)), .options = ko_options_default, .negative_mod_mask = 0,\
-    .custom_action  = (ezovrd_key_event), .context = (void *)(replacement_key), .trigger = EZOVRD_MODS_REMOVE(trigger_key), .replacement = (replacement_key)})
-
-#define ezovrd_make_pre_modified(trigger_key, replacement_key) \
-    ((const key_override_t){.trigger_mods = EZOVRD_MODS_GET_MASK(trigger_key), .layers = ~0, .suppressed_mods = EZOVRD_GET_SUPPRESS(EZOVRD_MODS_GET_MASK(trigger_key), (replacement_key)), .options = ko_options_default, .negative_mod_mask = 0,\
-    .custom_action  = (ezovrd_key_event), .context = (void *)(replacement_key), .trigger = (trigger_key), .replacement = (replacement_key)})
+#define ezovrd_make_basic(mod_mask, trigger_key, replacement_key) \
+    ((const key_override_t){.trigger_mods = mod_mask, .layers = ~0, .suppressed_mods = EZOVRD_GET_SUPPRESS(mod_mask, (replacement_key)), .options = ko_options_default, .negative_mod_mask = 0,\
+    .custom_action  = ezovrd_key_event, .context = (void *)(replacement_key), .trigger = (trigger_key), .replacement = (replacement_key)})
 
 bool ezovrd_key_event(bool pressed, void *context);
