@@ -4,7 +4,7 @@ This module provides key overrides that work with all keycodes. Here is an examp
 
 ```c
 const key_override_t *key_overrides[] = {
-	&ezovrd_make_basic(MOD_MASK_SHIFT, KC_DOT, QK_CAPS_WORD_TOGGLE),
+    &ezovrd_make_basic(MOD_MASK_SHIFT, KC_DOT, QK_CAPS_WORD_TOGGLE),
 };
 ```
 
