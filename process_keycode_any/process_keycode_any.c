@@ -214,10 +214,14 @@ bool process_keycode_any(uint16_t keycode, const bool pressed) {
     keyrecord_t record = (keyrecord_t){.event = MAKE_KEYEVENT(0, 0, pressed)};
     action_t action = action_for_keycode(keycode);
 
+    if (!process_quantum_all(keycode, &record)) {
+        return false;
+    }
+
     if (action.code != ACTION_NO) {
         process_action(&record, action);
         return false;
     }
 
-    return process_quantum_all(keycode, &record);
+    return true;
 }
