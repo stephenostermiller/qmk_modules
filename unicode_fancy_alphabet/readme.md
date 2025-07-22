@@ -79,9 +79,13 @@ Typing country codes with this alphabet creates emoji flags. For example typing 
 
 ａ ｂ ｃ ｄ ｅ ｆ ｇ ｈ ｉ ｊ ｋ ｌ ｍ ｎ ｏ ｐ ｑ ｒ ｓ ｔ ｕ ｖ ｗ ｘ ｙ ｚ Ａ Ｂ Ｃ Ｄ Ｅ Ｆ Ｇ Ｈ Ｉ Ｊ Ｋ Ｌ Ｍ Ｎ Ｏ Ｐ Ｑ Ｒ Ｓ Ｔ Ｕ Ｖ Ｗ Ｘ Ｙ Ｚ ０ １ ２ ３ ４ ５ ６ ７ ８ ９ ０
 
+### `UNICODE_FANCY_ALPHABET_CURSED` (UFA_CUR)
+
+a̹͑ b̸̘ͨ̃ͥ͢͞͝ ç̂̓ ḏ̸͍̈́̿̕ e̥ f̧ͩ̒ͨ̓ g̡̭̥ͣ̓̏̀́ h̽́ i̵͋͒ j͔̘́ k͔̒ͬ̇ͪ̚ l͕̠ͩͥ́͘ m̺ͥ̕ n͉̗ͭ͆ͨ̑ͅ o̵̩͔̾ͭͥ̓ p̳̊ͬ́ q̠̮ ŕ̡͖̘̭̯͔́ s͍̖̉ ţͩ u͏̮̃͊ v̜͔̀̈͋̚ͅ w̸̬̟ͦ̅̏̍͢ x̡͎̠̍͂͟ y̷̗͎ͨ z̧̨̗̮̗̙͢͡ A̋ B̦͖̬͂ C̣̙ D͔̗̻̩̿̀͠ͅ E̷͈̼̯̊͛̂ F̵̧͌̿͑ͭ G̡͓̣͊ͮ̐͡ H̛͇͈̟̑̌ Į̲̠̓͜͝ J̯ͨ͋ͯ́͝ K̠͇ͯ̒̓̎ͤ L̛͑̈́ M̨̱̍̋̓ Ņ̛̳̮̹̹͗̔ O̥ͤ̑̉ P̠̈ Q̴̪̘̽ͬͩ͝ Ṛ͉̹̻́ S̵̯̪̱̈ͅ T̖̞̜ͨ Ų̛̺̭ͭ V͚̐ W͍ͯ X͖̓̉ Y͏͈͚̩̕͟ Z͉̽ͨͮ͝ 0̸̖̲̓͛͠ 1̠͒̓ͦ̎ͫ̉ͩ 2̹̲̭̱̀͂̉ 3̖̣̳̃ͫͧ̕ͅ 4̗̹ 5͔̜̑ͪ̓̾̀̚ 6̳̀͡͞ 7̸̹͚͑ͨ͢ 8̘̬̃ͥ͝ 9̨̀͋ͬ 0̻̬̗͊̔͆̾
+
 ### `UNICODE_FANCY_ALPHABET_RANSOM` (UFA_RSM)
 
-𝓪 𝚋 𝕔 𝒹 e f ℊ 🇭 🅘 𝖏 🇰 🅛 ⓜ ⓝ 𝚘 𝚙 𝒒 𝚛 s 𝑡 𝓾 𝓿 𝔀 𝔁 𝔶 𝖟 𝑨 𝔅 🇨 𝙳 𝓔 🄵 𝒢 𝙷 ℐ 🅹 𝕂 🅛 🅼 𝕹 𝕆 𝔓 Q 🆁 𝕾 𝔗 🆄 𝑉 𝚆 𝕏 𝕐 Z ⓿ 1 2 𝟛 ④ ❺ 6 𝟽 ❽ 9
+𝓪 𝚋 𝕔 𝒹 e f ℊ 🇭 🅘 𝖏 🇰 🅛 ⓜ ⓝ 𝚘 p̱͍̿ 𝒒 𝚛 s 𝑡 𝓾 𝓿 𝔀 𝔁 𝔶 𝖟 𝑨 𝔅 🇨 𝙳 𝓔 🄵 𝒢 𝙷 ℐ 🅹 𝕂 🅛 🅼 𝕹 𝕆 𝔓 Q 🆁 𝕾 𝔗 🆄 𝑉 𝚆 𝕏 𝕐 Z ⓿ 1 2̷̸̧̓͑ 𝟛 ④ ❺ 6 𝟽 ❽ 9
 
 This alphabet uses characters from random other alphabets.
 

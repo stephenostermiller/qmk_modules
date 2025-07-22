@@ -32,6 +32,7 @@ enum unicode_fancy_alphabet_enum {
     UNICODE_FANCY_ALPHABET_BOLD_ITALIC,
     UNICODE_FANCY_ALPHABET_BOLD,
     UNICODE_FANCY_ALPHABET_WIDE,
+    UNICODE_FANCY_ALPHABET_CURSED,
     // Virtual alphabets come next to last
     UNICODE_FANCY_ALPHABET_RANSOM,
     // Keep this at the end of the list

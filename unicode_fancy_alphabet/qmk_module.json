@@ -79,6 +79,10 @@
             "aliases": ["UFA_WDE"]
         },
         {
+            "key": "KC_UNICODE_FANCY_ALPHABET_CURSED",
+            "aliases": ["UFA_CUR"]
+        },
+        {
             "key": "KC_UNICODE_FANCY_ALPHABET_RANSOM",
             "aliases": ["UFA_RSM"]
         }

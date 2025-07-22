@@ -21,6 +21,8 @@
 
 ASSERT_COMMUNITY_MODULES_MIN_API_VERSION(1,1,0);
 
+#define RAND_BETWEEN(min, max) ((rand() % ((max) - (min) + 1)) + (min))
+
 static uint8_t unicode_fancy_alphabet_current = UNICODE_FANCY_ALPHABET_NONE;
 static uint8_t unicode_fancy_alphabet_last = 1;
 
@@ -159,12 +161,32 @@ uint8_t unicode_fancy_alphabet_get(void) {
     return unicode_fancy_alphabet_current;
 }
 
+bool process_record_cursed(uint16_t keycode, keyrecord_t *record) {
+    switch(keycode) {
+        case KC_0:
+        case KC_1 ... KC_9:
+        case KC_A ... KC_Z:
+            if (record->event.pressed) {
+                tap_code16(keycode);
+                int diacritic_count = RAND_BETWEEN(3, 6);
+                for (int i = 0; i<diacritic_count; i++) {
+                    register_unicode(RAND_BETWEEN(0x0300, 0x036F));
+                }
+            }
+            return false;
+    }
+    return true;
+}
+
 bool _process_record_unicode_fancy_alphabet(uint16_t keycode, keyrecord_t *record) {
     int32_t unicode = 0;
     uint8_t alphabetIndex = unicode_fancy_alphabet_current;
     unicode_fancy_alphabet_t alphabet;
     if (alphabetIndex == UNICODE_FANCY_ALPHABET_RANSOM) {
         alphabetIndex = rand() % (UNICODE_FANCY_ALPHABET_RANSOM-1);
+    }
+    if (alphabetIndex == UNICODE_FANCY_ALPHABET_CURSED) {
+        return process_record_cursed(keycode, record);
     }
     memcpy_P(&alphabet, &unicode_fancy_alphabets[alphabetIndex], sizeof(unicode_fancy_alphabet_t));
 
@@ -300,6 +322,9 @@ bool process_record_unicode_fancy_alphabet(uint16_t keycode, keyrecord_t *record
                 return false;
             case KC_UNICODE_FANCY_ALPHABET_WIDE:
                 unicode_fancy_alphabet_set(UNICODE_FANCY_ALPHABET_WIDE);
+                return false;
+            case KC_UNICODE_FANCY_ALPHABET_CURSED:
+                unicode_fancy_alphabet_set(UNICODE_FANCY_ALPHABET_CURSED);
                 return false;
             case KC_UNICODE_FANCY_ALPHABET_RANSOM:
                 unicode_fancy_alphabet_set(UNICODE_FANCY_ALPHABET_RANSOM);
